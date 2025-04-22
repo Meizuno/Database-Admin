@@ -96,3 +96,19 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## Testing
+
+```bash
+# npm
+npm run test
+
+# pnpm
+pnpm test
+
+# yarn
+yarn test
+
+# bun
+bun run test
+```
