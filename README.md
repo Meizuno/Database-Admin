@@ -2,29 +2,6 @@
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-## TODO
-
-- [ ] Create basic API
-  - [ ] Read tables
-  - [ ] Create table
-    - [ ] Primary key
-    - [ ] Foreign key
-    - [ ] ManyToMany
-    - [ ] Integer Field
-    - [ ] Float Field
-    - [ ] Char Field
-    - [ ] Text Field
-    - [ ] Boolean Field
-    - [ ] Date Field
-    - [ ] DateTime Field
-    - [ ] Timestamp
-      - [ ] CreatedAt
-      - [ ] UpdatedAt
-  - [ ] Update table
-  - [ ] Delete table
-  - [ ] Read table
-- [ ] Test basic API
-
 ## Setup
 
 Make sure to install dependencies:
