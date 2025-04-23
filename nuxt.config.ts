@@ -9,6 +9,6 @@ export default defineNuxtConfig({
   runtimeConfig: {
     dbType: 'sqlite',
     dbUrl: 'sqlite::memory:',
-    dbLogging: false
+    logging: false
   }
 })

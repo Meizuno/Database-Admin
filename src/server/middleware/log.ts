@@ -1,3 +1,7 @@
 export default defineEventHandler((event) => {
-  console.log('New request: ' + getRequestURL(event))
+  const config = useRuntimeConfig()
+
+  if (config.logging) {
+    console.log('New request: ' + getRequestURL(event))
+  }
 })
