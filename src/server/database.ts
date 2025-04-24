@@ -1,6 +1,7 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize } from "sequelize";
 
-const config = useRuntimeConfig()
-const sequelize = new Sequelize(config.dbUrl, { logging: config.logging ? console.log : false })
+const config = useRuntimeConfig();
 
-export { sequelize }
+export const sequelize = new Sequelize(config.dbUrl, {
+  logging: config.logging ? console.log : false,
+});
