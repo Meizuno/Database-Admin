@@ -7,8 +7,8 @@ export default defineNuxtConfig({
   srcDir: 'src/',
 
   runtimeConfig: {
-    dbType: 'sqlite',
-    dbUrl: 'sqlite::memory:',
+    dbType: 'postgres',
+    dbUrl: 'postgres://username:password@postgres:5432/postgres',
     logging: false
   }
 })

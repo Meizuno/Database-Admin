@@ -9,37 +9,70 @@ on:
       - main
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '22'
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Run tests
-        run: yarn test
-
   build:
     runs-on: ubuntu-latest
-    needs: test
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Set up Docker Buildx Cache
+        uses: actions/cache@v2
         with:
-          node-version: '22'
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
 
-      - name: Install dependencies
-        run: yarn install
+      - name: Build Docker image
+        run: |
+          docker build --file Dockerfile --tag db-admin:latest .
 
-      - name: Build project
-        run: yarn build
+      - name: Save Docker image as an artifact
+        run: |
+          docker save -o db-admin.tar db-admin:latest
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Load Docker image from artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: db-admin.tar
+          path: ./images
+
+      - name: Load Docker image
+        run: |
+          docker load -i ./images/db-admin.tar
+
+      - name: Create docker network
+        run: |
+          docker network create db-admin
+
+      - name: Run PostgreSQL container
+        run: |
+          docker run -d --name postgres --network db-admin -e POSTGRES_USER=user -e POSTGRES_PASSWORD=1234 postgres:latest
+
+      - name: Run db-admin container
+        run: |
+          docker run -d --name db-admin --network db-admin db-admin:latest
+
+      - name: Run newman tests
+        run: |
+          docker run --rm --network db-admin -v $(pwd)/postman:/postman newman/newman run collection.json -e environment.json
+
+      - name: Stop containers
+        run: |
+          docker stop db-admin
+          docker stop postgres
+
+      - name: Remove containers
+        run: |
+          docker rm db-admin
+          docker rm postgres
