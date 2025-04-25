@@ -1,0 +1,1501 @@
+{
+	"info": {
+		"_postman_id": "889cbcd2-065a-46c1-a21d-d9c6ba8bcd63",
+		"name": "Database Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37368543"
+	},
+	"item": [
+		{
+			"name": "Health Check Database",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected status\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"status\", \"ok\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected dbType\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"dbType\", \"postgres\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/healthcheck/database",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"healthcheck",
+						"database"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create EMPTY Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"EMPTY\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.equals('nextval(\"EMPTY_id_seq\"::regclass)');\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(true);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"EMPTY\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read EMPTY Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"EMPTY\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.equals('nextval(\"EMPTY_id_seq\"::regclass)');\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(true);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/EMPTY",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"EMPTY"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create INTEGER Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"INTEGER\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"INTEGER\",\r\n    \"columns\": [\r\n        {\r\n            \"name\": \"id\",\r\n            \"params\": {\r\n                \"type\": \"INTEGER\"\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read INTEGER Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"INTEGER\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/INTEGER",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"INTEGER"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create FLOAT Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"FLOAT\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"DOUBLE PRECISION\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"FLOAT\",\r\n    \"columns\": [\r\n        {\r\n            \"name\": \"id\",\r\n            \"params\": {\r\n                \"type\": \"FLOAT\"\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read FLOAT Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"FLOAT\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"DOUBLE PRECISION\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/FLOAT",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"FLOAT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create CHAR Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"CHAR\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"CHARACTER(20)\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"CHAR\",\r\n    \"columns\": [\r\n        {\r\n            \"name\": \"id\",\r\n            \"params\": {\r\n                \"type\": \"CHAR(20)\"\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read CHAR Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"CHAR\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"CHARACTER(20)\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/CHAR",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"CHAR"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create TEXT Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"TEXT\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"TEXT\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"TEXT\",\r\n    \"columns\": [\r\n        {\r\n            \"name\": \"id\",\r\n            \"params\": {\r\n                \"type\": \"TEXT\"\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read TEXT Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"TEXT\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"TEXT\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/TEXT",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"TEXT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create BOOLEAN Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"BOOLEAN\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"BOOLEAN\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"BOOLEAN\",\r\n    \"columns\": [\r\n        {\r\n            \"name\": \"id\",\r\n            \"params\": {\r\n                \"type\": \"BOOLEAN\"\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read BOOLEAN Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"BOOLEAN\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"BOOLEAN\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/BOOLEAN",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"BOOLEAN"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create DATE Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"DATE\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"DATE\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"DATE\",\r\n    \"columns\": [\r\n        {\r\n            \"name\": \"id\",\r\n            \"params\": {\r\n                \"type\": \"DATE\"\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read DATE Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"DATE\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"DATE\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/DATE",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"DATE"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create TIMESTAMP Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"TIMESTAMP\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"TIMESTAMP WITHOUT TIME ZONE\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"TIMESTAMP\",\r\n    \"columns\": [\r\n        {\r\n            \"name\": \"id\",\r\n            \"params\": {\r\n                \"type\": \"TIMESTAMP\"\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read TIMESTAMP Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"TIMESTAMP\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"TIMESTAMP WITHOUT TIME ZONE\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/TIMESTAMP",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"TIMESTAMP"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create PK Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"PK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.equals('nextval(\"PK_id_seq\"::regclass)');\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(true);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"PK\",\r\n    \"columns\": [\r\n        {\r\n            \"name\": \"id\",\r\n            \"params\": {\r\n                \"primaryKey\": true,\r\n                \"type\": \"INTEGER\",\r\n                \"allowNull\": false,\r\n                \"autoIncrement\": true\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read PK Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"PK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.equals('nextval(\"PK_id_seq\"::regclass)');\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(true);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/PK",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"PK"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create NULL Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"NULL\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(true);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"NULL\",\r\n    \"columns\": [\r\n        {\r\n            \"name\": \"id\",\r\n            \"params\": {\r\n                \"allowNull\": true\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read NULL Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"NULL\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(true);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/NULL",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"NULL"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create INCREMENT Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"INCREMENT\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.equals('nextval(\"INCREMENT_id_seq\"::regclass)');\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"INCREMENT\",\r\n    \"columns\": [\r\n        {\r\n            \"name\": \"id\",\r\n            \"params\": {\r\n                \"autoIncrement\": true\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read INCREMENT Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"INCREMENT\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.equals('nextval(\"INCREMENT_id_seq\"::regclass)');\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/INCREMENT",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"INCREMENT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create DEFAULT Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"DEFAULT\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.equals(\"1\");\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"DEFAULT\",\r\n    \"columns\": [\r\n        {\r\n            \"name\": \"id\",\r\n            \"params\": {\r\n                \"defaultValue\": \"1\"\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read DEFAULT Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"DEFAULT\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.equals(\"1\");\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/DEFAULT",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"DEFAULT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read tables",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"const tables = [\r",
+							"    \"EMPTY\",\r",
+							"    \"INTEGER\",\r",
+							"    \"FLOAT\",\r",
+							"    \"CHAR\",\r",
+							"    \"TEXT\",\r",
+							"    \"BOOLEAN\",\r",
+							"    \"DATE\",\r",
+							"    \"TIMESTAMP\",\r",
+							"    \"PK\",\r",
+							"    \"NULL\",\r",
+							"    \"INCREMENT\",\r",
+							"    \"DEFAULT\"\r",
+							"]\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check if name in response is present in tables list\", function () {\r",
+							"    responseJson.forEach((item) => {\r",
+							"        pm.expect(tables).to.include(item.name, `The name '${item.name}' is not in the tables list`);\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

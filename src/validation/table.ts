@@ -3,9 +3,12 @@ import { z } from "zod";
 export const columnParamSchema = z.object({
   allowNull: z.boolean().optional().default(false),
   primaryKey: z.boolean().optional().default(false),
+  autoIncrement: z.boolean().optional().default(false),
+  defaultValue: z.string().optional(),
   type: z
-    .enum(["INTEGER", "FLOAT", "CHAR", "TEXT", "BOOLEAN", "DATE", "TIMESTAMP"])
-    .default("INTEGER"),
+    .enum(["INTEGER", "FLOAT", "TEXT", "BOOLEAN", "DATE", "TIMESTAMP"])
+    .default("INTEGER")
+    .or(z.string().regex(/^CHAR\([0-9]*\)$/)),
 });
 
 export const tableColumnSchema = z.object({

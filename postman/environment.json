@@ -1,0 +1,15 @@
+{
+	"id": "22aae0d9-c437-47fc-b6c3-7eeeb9f2b689",
+	"name": "Database Admin",
+	"values": [
+		{
+			"key": "host",
+			"value": "localhost:3000",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2025-04-25T10:39:05.571Z",
+	"_postman_exported_using": "Postman/11.42.5"
+}
