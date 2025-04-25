@@ -43,7 +43,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Load Docker image from artifact
+      - name: Load Docker image from cache
         uses: actions/cache@v3
         with:
           key: ${{ runner.os }}-cache-${{ github.sha }}
@@ -67,7 +67,7 @@ jobs:
 
       - name: Run newman tests
         run: |
-          docker run --rm --network db-admin -v $(pwd)/postman:/postman newman/newman run collection.json -e environment.json
+          docker run --rm --network db-admin -v $(pwd)/postman:/postman postman/newman run collection.json -e environment.json
 
       - name: Stop containers
         run: |
