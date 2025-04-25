@@ -1,22 +1,19 @@
 ## TODO
 
 - [ ] Create basic API
-  - [ ] Read tables
+  - [x] Read tables
   - [ ] Create table
-    - [ ] Primary key
+    - [x] Primary key
     - [ ] Foreign key
     - [ ] ManyToMany
-    - [ ] Integer Field
-    - [ ] Float Field
-    - [ ] Char Field
-    - [ ] Text Field
-    - [ ] Boolean Field
-    - [ ] Date Field
-    - [ ] DateTime Field
-    - [ ] Timestamp
-      - [ ] CreatedAt
-      - [ ] UpdatedAt
+    - [x] Integer Field
+    - [x] Float Field
+    - [x] Char Field
+    - [x] Text Field
+    - [x] Boolean Field
+    - [x] Date Field
+    - [x] Timestamp Field
   - [ ] Update table
   - [ ] Delete table
-  - [ ] Read table
+  - [x] Read table
 - [ ] Test basic API
