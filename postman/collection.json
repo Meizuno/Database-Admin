@@ -1469,10 +1469,461 @@
 							"    pm.expect(pm.response).to.be.ok;\r",
 							"});\r",
 							"\r",
+							"pm.test(\"Check if tables list is not empty\", function () {\r",
+							"    pm.expect(responseJson).to.not.be.empty;\r",
+							"});\r",
+							"\r",
 							"pm.test(\"Check if name in response is present in tables list\", function () {\r",
 							"    responseJson.forEach((item) => {\r",
 							"        pm.expect(tables).to.include(item.name, `The name '${item.name}' is not in the tables list`);\r",
 							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete EMPTY Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/EMPTY",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"EMPTY"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete INTEGER Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/INTEGER",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"INTEGER"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete FLOAT Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/FLOAT",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"FLOAT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete CHAR Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/CHAR",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"CHAR"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete TEXT Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/TEXT",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"TEXT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete BOOLEAN Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/BOOLEAN",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"BOOLEAN"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete DATE Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/DATE",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"DATE"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete TIMESTAMP Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/TIMESTAMP",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"TIMESTAMP"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete PK Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/PK",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"PK"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete NULL Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/NULL",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"NULL"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete INCREMENT Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/INCREMENT",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"INCREMENT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete DEFAULT Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/DEFAULT",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"DEFAULT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read tables",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check if tables list is not empty\", function () {\r",
+							"    pm.expect(responseJson).to.be.empty;\r",
 							"});\r",
 							""
 						],
