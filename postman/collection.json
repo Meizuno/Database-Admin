@@ -1442,6 +1442,122 @@
 			"response": []
 		},
 		{
+			"name": "Create UNIQUE Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"UNIQUE\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"UNIQUE\",\r\n    \"columns\": [\r\n        {\r\n            \"name\": \"id\",\r\n            \"params\": {\r\n                \"unique\": true\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read UNIQUE Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"UNIQUE\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns.id;\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/UNIQUE",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"UNIQUE"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Read tables",
 			"event": [
 				{
@@ -1910,6 +2026,40 @@
 			"response": []
 		},
 		{
+			"name": "Delete UNIQUE Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/UNIQUE",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"UNIQUE"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Read tables",
 			"event": [
 				{
@@ -1922,7 +2072,7 @@
 							"    pm.expect(pm.response).to.be.ok;\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Check if tables list is not empty\", function () {\r",
+							"pm.test(\"Check if response list is not empty\", function () {\r",
 							"    pm.expect(responseJson).to.be.empty;\r",
 							"});\r",
 							""

@@ -5,6 +5,7 @@ export const columnParamSchema = z.object({
   primaryKey: z.boolean().optional().default(false),
   autoIncrement: z.boolean().optional().default(false),
   defaultValue: z.string().optional(),
+  unique: z.boolean().optional().default(false),
   type: z
     .enum(["INTEGER", "FLOAT", "TEXT", "BOOLEAN", "DATE", "TIMESTAMP"])
     .default("INTEGER")
