@@ -7,3 +7,17 @@ export const useTablesFetch = async () => {
   });
   return data;
 }
+
+export const useTableFetch = async (tableName: string) => {
+  const data = await useAsyncData(
+    `table-${tableName}`,
+    () => $fetch(`/api/tables/${tableName}`),
+    {
+      getCachedData: () => {
+        const { data } = useNuxtData(`table-${tableName}`);
+        return data.value || null;
+      },
+    }
+  );
+  return data;
+};

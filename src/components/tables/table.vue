@@ -16,9 +16,7 @@
         </template>
       </UInput>
       <UButton
-        :icon="
-          isExpanded ? 'codicon:collapse-all' : 'codicon:expand-all'
-        "
+        :icon="isExpanded ? 'codicon:collapse-all' : 'codicon:expand-all'"
         size="md"
         color="neutral"
         variant="link"
@@ -61,8 +59,8 @@ const triggerExpand = () => {
   }
 };
 
-const UButton = resolveComponent('UButton')
-const UDropdownMenu = resolveComponent('UDropdownMenu')
+const UButton = resolveComponent("UButton");
+const UDropdownMenu = resolveComponent("UDropdownMenu");
 const columns = [
   {
     id: "expand",
@@ -90,6 +88,16 @@ const columns = [
   {
     accessorKey: "name",
     header: "NAME",
+    cell: ({ row }) =>
+      h(
+        UButton,
+        {
+          label: row.original.name,
+          variant: "link",
+          color: "primary",
+          to: `/tables/${row.original.name}`,
+        }
+      ),
   },
   {
     accessorKey: "tableSize",
@@ -100,56 +108,56 @@ const columns = [
     header: "COUNT",
   },
   {
-    id: 'actions',
+    id: "actions",
     cell: ({ row }) => {
       return h(
-        'div',
-        { class: 'text-right' },
+        "div",
+        { class: "text-right" },
         h(
           UDropdownMenu,
           {
             content: {
-              align: 'end'
+              align: "end",
             },
             items: getRowItems(row),
-            'aria-label': 'Actions dropdown'
+            "aria-label": "Actions dropdown",
           },
           () =>
             h(UButton, {
-              icon: 'i-lucide-ellipsis-vertical',
-              color: 'neutral',
-              variant: 'ghost',
-              class: 'ml-auto',
-              'aria-label': 'Actions dropdown'
+              icon: "i-lucide-ellipsis-vertical",
+              color: "neutral",
+              variant: "ghost",
+              class: "ml-auto",
+              "aria-label": "Actions dropdown",
             })
         )
-      )
-    }
-  }
+      );
+    },
+  },
 ];
 
 function getRowItems(row: Row) {
   return [
     {
-      label: 'Expand table',
-      icon: 'i-lucide-chevron-down',
-      color: 'neutral',
-      onClick: () => row.toggleExpanded()
+      label: "Expand table",
+      icon: "i-lucide-chevron-down",
+      color: "neutral",
+      onClick: () => row.toggleExpanded(),
     },
     {
-      type: 'separator'
+      type: "separator",
     },
     {
-      label: 'Edit table',
-      icon: 'i-lucide-pencil',
-      color: 'info',
+      label: "Edit table",
+      icon: "i-lucide-pencil",
+      color: "info",
     },
     {
-      label: 'Delete table',
-      icon: 'i-lucide-trash-2',
-      color: 'error'
-    }
-  ]
+      label: "Delete table",
+      icon: "i-lucide-trash-2",
+      color: "error",
+    },
+  ];
 }
 
 const name = ref("");
