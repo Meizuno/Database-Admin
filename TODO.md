@@ -14,6 +14,6 @@
     - [x] Date Field
     - [x] Timestamp Field
   - [ ] Update table
-  - [ ] Delete table
+  - [x] Delete table
   - [x] Read table
 - [ ] Test basic API

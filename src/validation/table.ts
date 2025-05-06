@@ -19,11 +19,22 @@ export const tableColumnSchema = z.object({
     .default(() => columnParamSchema.parse({})),
 });
 
+export const tableIndexSchema = z.object({
+  name: z.string(),
+  primary: z.boolean().optional().default(false),
+  unique: z.boolean().optional().default(false),
+  indkey: z.string(),
+  definition: z.string(),
+});
+
 export const tableSchema = z.object({
   name: z.string().min(1),
   columns: z.array(tableColumnSchema).optional(),
+  indexes: z.array(z.string()).optional(),
+  foreignKeys: z.array(z.string()).optional(),
 });
 
 export type ColumnParam = z.infer<typeof columnParamSchema>;
 export type TableColumn = z.infer<typeof tableColumnSchema>;
+export type TableIndex = z.infer<typeof tableIndexSchema>;
 export type Table = z.infer<typeof tableSchema>;

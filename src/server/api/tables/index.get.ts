@@ -6,9 +6,19 @@ export default defineEventHandler(async (_) => {
 
   for (const table of tables) {
     const schema = await sequelize.getQueryInterface().describeTable(table);
+    const indexes = await sequelize.getQueryInterface().showIndex(table);
+    const foreignKeys = await sequelize
+      .getQueryInterface()
+      .getForeignKeyReferencesForTable(table);
+
+    const meta = await tableSize(table);
+
     tableDetailsList.push({
       name: table,
-      columns: schema
+      columns: parseColumns(schema),
+      indexes: indexes,
+      foreignKeys: foreignKeys,
+      ...meta,
     });
   }
 

@@ -18,18 +18,27 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const attributes = parseColumns(columns);
+  const attributes = parseAttributes(columns);
 
   await sequelize.getQueryInterface().createTable(name, attributes);
   const schema = await sequelize.getQueryInterface().describeTable(name);
+  const indexes = await sequelize.getQueryInterface().showIndex(name);
+  const foreignKeys = await sequelize
+    .getQueryInterface()
+    .getForeignKeyReferencesForTable(name);
+
+  const meta = await tableSize(name);
 
   return {
     name: name,
-    columns: schema,
+    columns: parseColumns(schema),
+    indexes: indexes,
+    foreignKeys: foreignKeys,
+    ...meta,
   };
 });
 
-const parseColumns = (columns?: TableColumn[]) => {
+const parseAttributes = (columns?: TableColumn[]) => {
   const result = columns?.reduce<{ [key: string]: ColumnParam }>(
     (acc, { name, params }) => {
       acc[name] = params;
@@ -38,12 +47,14 @@ const parseColumns = (columns?: TableColumn[]) => {
     {}
   );
 
-  return result || {
-    id: {
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-      type: "INTEGER",
-    },
-  };
+  return (
+    result || {
+      id: {
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+        type: "INTEGER",
+      },
+    }
+  );
 };
