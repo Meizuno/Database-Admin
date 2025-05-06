@@ -61,7 +61,8 @@ const triggerExpand = () => {
   }
 };
 
-const UButton = resolveComponent("UButton");
+const UButton = resolveComponent('UButton')
+const UDropdownMenu = resolveComponent('UDropdownMenu')
 const columns = [
   {
     id: "expand",
@@ -97,8 +98,59 @@ const columns = [
   {
     accessorKey: "rowCount",
     header: "COUNT",
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => {
+      return h(
+        'div',
+        { class: 'text-right' },
+        h(
+          UDropdownMenu,
+          {
+            content: {
+              align: 'end'
+            },
+            items: getRowItems(row),
+            'aria-label': 'Actions dropdown'
+          },
+          () =>
+            h(UButton, {
+              icon: 'i-lucide-ellipsis-vertical',
+              color: 'neutral',
+              variant: 'ghost',
+              class: 'ml-auto',
+              'aria-label': 'Actions dropdown'
+            })
+        )
+      )
+    }
   }
 ];
+
+function getRowItems(row: Row) {
+  return [
+    {
+      label: 'Expand table',
+      icon: 'i-lucide-chevron-down',
+      color: 'neutral',
+      onClick: () => row.toggleExpanded()
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Edit table',
+      icon: 'i-lucide-pencil',
+      color: 'info',
+    },
+    {
+      label: 'Delete table',
+      icon: 'i-lucide-trash-2',
+      color: 'error'
+    }
+  ]
+}
 
 const name = ref("");
 const nameFilters = computed(() => {
