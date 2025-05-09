@@ -67,7 +67,7 @@ jobs:
 
       - name: Run newman tests
         run: |
-          docker run --rm --network db-admin -v $(pwd)/postman:/postman postman/newman run /postman/collection.json -e /postman/environment.json --env-var 'host=db-admin:3000'
+          docker run --rm --network db-admin -v $(pwd)/postman:/postman postman/newman run /postman/collection.json -e /postman/environment.json --env-var 'host=db-admin:3000' --verbose
 
       - name: Stop containers
         run: |
