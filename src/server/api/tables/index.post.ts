@@ -7,7 +7,7 @@ import {
 
 export default defineEventHandler(async (event) => {
   const body = await readValidatedBody(event, tableSchema.parse);
-  const { name, columns } = body;
+  const { name, columns, indexes } = body;
 
   const tableExists = await sequelize.getQueryInterface().tableExists(name);
 
@@ -21,8 +21,15 @@ export default defineEventHandler(async (event) => {
   const attributes = parseAttributes(columns);
 
   await sequelize.getQueryInterface().createTable(name, attributes);
+  if (indexes) {
+    indexes.forEach(async (index) => {
+      await sequelize.getQueryInterface().addIndex(name, index.fields, {
+        name: index.name
+      });
+    });
+  }
+
   const schema = await sequelize.getQueryInterface().describeTable(name);
-  const indexes = await sequelize.getQueryInterface().showIndex(name);
   const foreignKeys = await sequelize
     .getQueryInterface()
     .getForeignKeyReferencesForTable(name);
@@ -32,29 +39,29 @@ export default defineEventHandler(async (event) => {
   return {
     name: name,
     columns: parseColumns(schema),
-    indexes: indexes,
+    indexes: indexes || [],
     foreignKeys: foreignKeys,
     ...meta,
   };
 });
 
-const parseAttributes = (columns?: TableColumn[]) => {
+const parseAttributes = (columns: TableColumn[]) => {
   const result = columns?.reduce<{ [key: string]: ColumnParam }>(
-    (acc, { name, params }) => {
+    (acc, { name, params, foreignKey }) => {
       acc[name] = params;
+      if (foreignKey) {
+        acc[name].type = "INTEGER";
+        acc[name].references = {
+          model: foreignKey.tableName,
+          key: foreignKey.columnName,
+        };
+        acc[name].onDelete = "CASCADE";
+        acc[name].onUpdate = "CASCADE";
+      }
       return acc;
     },
     {}
   );
 
-  return (
-    result || {
-      id: {
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
-        type: "INTEGER",
-      },
-    }
-  );
+  return result;
 };

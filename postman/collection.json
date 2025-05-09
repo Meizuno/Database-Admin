@@ -1974,6 +1974,326 @@
 			"response": []
 		},
 		{
+			"name": "Create FK Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"FK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns[0]).to.have.property(\"name\").that.equals(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected indexes\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"indexes\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected foreignKeys\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"foreignKeys\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected tableSize\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"tableSize\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected rowCount\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"rowCount\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns[0];\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.equals('nextval(\"FK_id_seq\"::regclass)');\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected Foreign keys\", function () {\r",
+							"    let foreignKey = responseJson.foreignKeys[0];\r",
+							"\r",
+							"    pm.expect(foreignKey).to.have.property(\"referencedTableName\").that.equals(\"PK\");\r",
+							"    pm.expect(foreignKey).to.have.property(\"referencedColumnName\").that.equals(\"id\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"FK\",\r\n    \"columns\": [\r\n        {\r\n            \"name\": \"id\",\r\n            \"params\": {\r\n                \"primaryKey\": true,\r\n                \"type\": \"INTEGER\",\r\n                \"allowNull\": false,\r\n                \"autoIncrement\": true\r\n            }\r\n        },\r\n        {\r\n            \"name\": \"pk_id\",\r\n            \"params\": {\r\n                \"primaryKey\": true,\r\n                \"type\": \"INTEGER\",\r\n                \"allowNull\": false,\r\n                \"autoIncrement\": true\r\n            },\r\n            \"foreignKey\": {\r\n                \"tableName\": \"PK\",\r\n                \"columnName\": \"id\"\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read FK Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"FK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns[0]).to.have.property(\"name\").that.equals(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected indexes\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"indexes\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected foreignKeys\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"foreignKeys\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected tableSize\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"tableSize\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected rowCount\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"rowCount\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns[0];\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.equals('nextval(\"FK_id_seq\"::regclass)');\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected Foreign keys\", function () {\r",
+							"    let foreignKey = responseJson.foreignKeys[0];\r",
+							"\r",
+							"    pm.expect(foreignKey).to.have.property(\"referencedTableName\").that.equals(\"PK\");\r",
+							"    pm.expect(foreignKey).to.have.property(\"referencedColumnName\").that.equals(\"id\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/FK",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"FK"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create INDEX Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"INDEX\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns[0]).to.have.property(\"name\").that.equals(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected indexes\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"indexes\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected foreignKeys\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"foreignKeys\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected tableSize\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"tableSize\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected rowCount\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"rowCount\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns[0];\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected indexes\", function () {\r",
+							"    let index = responseJson.indexes[0];\r",
+							"\r",
+							"    pm.expect(index).to.have.property(\"name\").that.equals(\"id_index\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"INDEX\",\r\n    \"columns\": [\r\n        {\r\n            \"name\": \"id\",\r\n            \"params\": {\r\n                \"type\": \"INTEGER\"\r\n            }\r\n        }\r\n    ],\r\n    \"indexes\": [\r\n        {\r\n            \"name\": \"id_index\",\r\n            \"fields\": [\"id\"]\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/tables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read INDEX Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test('Request is successful', function () {\r",
+							"    pm.expect(pm.response).to.be.ok;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected name\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"name\", \"INDEX\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected columns\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"columns\");\r",
+							"    pm.expect(responseJson.columns[0]).to.have.property(\"name\").that.equals(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected indexes\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"indexes\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected foreignKeys\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"foreignKeys\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected tableSize\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"tableSize\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected rowCount\", function () {\r",
+							"    pm.expect(responseJson).to.have.property(\"rowCount\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected ID column\", function () {\r",
+							"    let idColumn = responseJson.columns[0];\r",
+							"\r",
+							"    pm.expect(idColumn).to.have.property(\"type\").that.equals(\"INTEGER\");\r",
+							"    pm.expect(idColumn).to.have.property(\"allowNull\").that.equals(false);\r",
+							"    pm.expect(idColumn).to.have.property(\"defaultValue\").that.is.null;\r",
+							"    pm.expect(idColumn).to.have.property(\"primaryKey\").that.equals(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check expected indexes\", function () {\r",
+							"    let index = responseJson.indexes[0];\r",
+							"\r",
+							"    pm.expect(index).to.have.property(\"name\").that.equals(\"id_index\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/INDEX",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"INDEX"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Read tables",
 			"event": [
 				{
@@ -1995,7 +2315,9 @@
 							"    \"NULL\",\r",
 							"    \"INCREMENT\",\r",
 							"    \"DEFAULT\",\r",
-							"    \"UNIQUE\"\r",
+							"    \"UNIQUE\",\r",
+							"    \"FK\",\r",
+							"    \"INDEX\"\r",
 							"]\r",
 							"\r",
 							"pm.test('Request is successful', function () {\r",
@@ -2307,40 +2629,6 @@
 			"response": []
 		},
 		{
-			"name": "Delete PK Table",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test('Status code is 204', function () {\r",
-							"    pm.response.to.have.status(204);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/tables/PK",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"tables",
-						"PK"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Delete NULL Table",
 			"event": [
 				{
@@ -2471,6 +2759,108 @@
 						"api",
 						"tables",
 						"UNIQUE"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete FK Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/FK",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"FK"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete INDEX Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/INDEX",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"INDEX"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete PK Table",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/tables/PK",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tables",
+						"PK"
 					]
 				}
 			},
